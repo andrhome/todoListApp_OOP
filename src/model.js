@@ -16,4 +16,14 @@ class Model {
 
         Object.keys(data).forEach(prop => item[prop] = data[prop]);
     }
+
+    removeItem(id) {
+        const index = this.state.findIndex(item => item.id == id);
+
+        if(index > -1) {
+            this.state.splice(index, 1);
+        }
+    }
 }
+
+export default Model;
