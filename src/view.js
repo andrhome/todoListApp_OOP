@@ -7,9 +7,36 @@ class View {
         this.list = document.getElementById('todo-list');
     }
 
-    createElement(id) {
+    createElement(todo) {
+        const checkbox = createElement('input', {type: 'checkbox', className: 'checkbox', checked: todo.completed ? 'checked' : ''});
+        const label = createElement('label', {className: 'title'}, todo.title);
+        const editInput = createElement('input', {type: 'text', className: 'textfield'});
+        const editButton = createElement('button', {className: 'edit'}, 'Edit');
+        const removeButton = createElement('button', {className: 'remove'}, 'Delete');
+        const item = createElement('li', {className: `todo-item${todo.completed ? ' completed' : ''}`, 'data-id': todo.id}, checkbox, label, editInput, editButton, removeButton);
 
+        return this.addEventListeners(item);
     }
+
+    addEventListeners(item) {
+        const checkbox = document.querySelector('.checkbox');
+        const editButton = document.querySelector('.button.edit');
+        const removeButton = document.querySelector('.button.remove');
+
+        checkbox.addEventListener('change', this.handleToggle.bind(this));
+        editButton.addEventListener('click', this.handleEdit.bind(this));
+        removeButton.addEventListener('click', this.handleRemove.bind(this));
+
+        return item;
+    }
+
+    handleToggle({target}) {
+        const listItem = target.parentNode;
+        const id = listItem.getAttribute('data-id');
+        const completed = target.completed;
+    }
+
+
 
     findListItem(id) {
         return this.list.querySelector(`[data-id="${id}"]`);
