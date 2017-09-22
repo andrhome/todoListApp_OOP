@@ -1,5 +1,9 @@
-class Model {
+import { EventEmitter } from "./helpers";
+
+class Model extends EventEmitter{
     constructor(state = []) {
+        super();
+
         this.state = state;
     };
 
@@ -9,12 +13,17 @@ class Model {
 
     addItem(item) {
         this.state.push(item);
+        this.emit('change', this.state);
+        return item;
     }
 
     updateItem(id, data) {
         const item = this.getItem(id);
-
         Object.keys(data).forEach(prop => item[prop] = data[prop]);
+
+        this.emit('change', this.state);
+
+        return item;
     }
 
     removeItem(id) {
@@ -22,6 +31,7 @@ class Model {
 
         if(index > -1) {
             this.state.splice(index, 1);
+            this.emit('change', this.state);
         }
     }
 }

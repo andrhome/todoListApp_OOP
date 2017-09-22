@@ -1,10 +1,14 @@
-import { createElement } from "./helpers";
+import { createElement, EventEmitter } from "./helpers";
 
-class View {
+class View extends EventEmitter{
     constructor() {
+        super();
+
         this.form = document.getElementById('todo-form');
         this.input = document.getElementById('add-input');
         this.list = document.getElementById('todo-list');
+
+        this.form.addEventListener('submit', this.handleAdd.bind(this))
     }
 
     createElement(todo) {
@@ -18,25 +22,60 @@ class View {
         return this.addEventListeners(item);
     }
 
-    addEventListeners(item) {
-        const checkbox = document.querySelector('.checkbox');
-        const editButton = document.querySelector('.button.edit');
-        const removeButton = document.querySelector('.button.remove');
+    addEventListeners(listItem) {
+        const checkbox = listItem.querySelector('.checkbox');
+        const editButton = listItem.querySelector('button.edit');
+        const removeButton = listItem.querySelector('button.remove');
 
         checkbox.addEventListener('change', this.handleToggle.bind(this));
         editButton.addEventListener('click', this.handleEdit.bind(this));
         removeButton.addEventListener('click', this.handleRemove.bind(this));
 
-        return item;
+        return listItem;
+    }
+
+    handleAdd(event) {
+        event.preventDefault();
+
+        if(!this.input.value) return alert('Need to type task name!');
+
+        const value = this.input.value;
+
+        this.emit('add', value);
     }
 
     handleToggle({target}) {
         const listItem = target.parentNode;
         const id = listItem.getAttribute('data-id');
-        const completed = target.completed;
+        const completed = target.checked;
+
+        this.emit('toggle', {id, completed});
     }
 
+    handleEdit({target}) {
+        const listItem = target.parentNode;
+        const id = listItem.getAttribute('data-id');
+        const label = listItem.querySelector('.title');
+        const input = listItem.querySelector('.textfield');
+        const editButton = listItem.querySelector('button.edit');
+        const title = input.value;
+        const isEditing = listItem.classList.contains('editing');
 
+        if(isEditing) {
+            this.emit('edit', {id, title});
+        } else {
+            input.value = label.textContent;
+            editButton.textContent = 'Save';
+            listItem.classList.add('editing');
+        }
+    }
+
+    handleRemove({target}) {
+        const listItem = target.parentNode;
+        const id = listItem.getAttribute('data-id');
+
+        this.emit('remove', id);
+    }
 
     findListItem(id) {
         return this.list.querySelector(`[data-id="${id}"]`);
@@ -66,7 +105,7 @@ class View {
         const listItem = this.findListItem(todo.id);
         const label = listItem.querySelector('.title');
         const input = listItem.querySelector('.textfield');
-        const editButton = listItem.querySelector('.button.edit');
+        const editButton = listItem.querySelector('button.edit');
 
         label.textContent = todo.title;
         editButton.textContent = 'Save';
