@@ -22,7 +22,7 @@ function createElement(tag, props, ...children) {
 
 class EventEmitter {
     constructor() {
-        this.events = {}
+        this.events = [];
     }
 
     on(type, callback) {

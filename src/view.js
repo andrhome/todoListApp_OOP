@@ -8,7 +8,7 @@ class View extends EventEmitter{
         this.input = document.getElementById('add-input');
         this.list = document.getElementById('todo-list');
 
-        this.form.addEventListener('submit', this.handleAdd.bind(this))
+        this.form.addEventListener('submit', this.handleAdd.bind(this));
     }
 
     createElement(todo) {
