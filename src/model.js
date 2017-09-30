@@ -1,5 +1,3 @@
-const baseUrl = 'https://jsonplaceholder.typicode.com';
-
 class Model{
     constructor(state = []) {
         this.state = state;
@@ -32,34 +30,9 @@ class Model{
         }
     }
 
-    httpRequest(url) {
-        return new Promise( function(resolve, reject) {
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', url, true);
-
-            xhr.onload = function() {
-                if (this.status === 200) {
-                    resolve(this.response);
-                } else {
-                    const error = new Error(this.statusText);
-                    error.code = this.status;
-                    reject(error);
-                }
-            };
-
-            xhr.onerror = function() {
-                reject(new Error("Network Error"));
-            };
-
-            xhr.send();
-        });
-
-    }
-
-    getData() {
-        this.httpRequest(baseUrl + '/posts').then(response => {
-            console.log(response);
-        });
+    // Get data from JSONPlaceholder (https://jsonplaceholder.typicode.com)
+    getData(data) {
+        console.log('Model data ', data);
     }
 }
 

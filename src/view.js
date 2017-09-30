@@ -1,4 +1,4 @@
-import { createElement, EventEmitter } from "./helpers";
+import { createElement, EventEmitter, HttpService, baseUrl } from "./helpers";
 
 class View extends EventEmitter{
     constructor() {
@@ -9,6 +9,12 @@ class View extends EventEmitter{
         this.list = document.getElementById('todo-list');
 
         this.form.addEventListener('submit', this.handleAdd.bind(this));
+
+
+        // Get data from JSONPlaceholder (https://jsonplaceholder.typicode.com)
+        this.http = new HttpService();
+        this.getDataBtn = document.getElementById('getDataBtn');
+        this.getDataBtn.addEventListener('click', this.handleGetData.bind(this));
     }
 
     createElement(todo) {
@@ -116,6 +122,16 @@ class View extends EventEmitter{
         const listItem = this.findListItem(id);
 
         this.list.removeChild(listItem);
+    }
+
+    // Get data from JSONPlaceholder (https://jsonplaceholder.typicode.com)
+    handleGetData(event) {
+        event.preventDefault();
+
+        this.http.httpRequest(baseUrl + '/posts/1').then(response => {
+            this.emit('getData', response);
+            console.log('View response ', response);
+        });
     }
 }
 

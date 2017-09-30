@@ -7,6 +7,8 @@ class Controller {
         view.on('toggle', this.toggleTodo.bind(this));
         view.on('edit', this.editTodo.bind(this));
         view.on('remove', this.removeTodo.bind(this));
+
+        view.on('getData', this.getDataJson.bind(this));
     }
 
     addTodo(title) {
@@ -34,6 +36,11 @@ class Controller {
     removeTodo(id) {
         this.model.removeItem(id);
         this.view.removeItem(id);
+    }
+
+    // Get data from JSONPlaceholder (https://jsonplaceholder.typicode.com)
+    getDataJson(data) {
+        this.model.getData(data);
     }
 }
 
