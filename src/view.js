@@ -128,10 +128,14 @@ class View extends EventEmitter{
     handleGetData(event) {
         event.preventDefault();
 
-        this.http.httpRequest(baseUrl + '/posts/1').then(response => {
-            this.emit('getData', response);
-            console.log('View response ', response);
-        });
+        this.http.httpRequest(baseUrl + '/posts/1')
+            .then( response => {
+                    this.emit('getData', response);
+                    console.log('View response ', response);
+                })
+            .catch( error => {
+                alert(`Rejected: ${error}`);
+            });
     }
 }
 
