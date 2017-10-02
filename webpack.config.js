@@ -1,7 +1,7 @@
 const path = require('path');
 
 module.exports = {
-    entry: './src/index',
+    entry: './src/todo/todo-init.js',
 
     output: {
         path: path.resolve(__dirname, 'public'),

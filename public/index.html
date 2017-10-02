@@ -14,6 +14,21 @@
 
     <body>
         <main id="app">
+            <h1>Todo list</h1>
+            <br>
+            <form action="#" id="todoForm">
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <div class="row">
+                            <label class="col-md-12">
+                                <input type="text" id="textField" class="form-control" placeholder="Type task name">
+                            </label>
+                        </div>
+                    </div>
+                    <button id="addTodoBtn" class="btn col-md-1" type="submit">Add</button>
+                </div>
+            </form>
+            <br>
             <table id="tableList" class="table table-striped">
                 <thead>
                     <tr>
@@ -24,23 +39,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>ggdfsgs</td>
-                        <td><label><input type="checkbox" value=""></label></td>
-                        <td>sdfgsdfgsdfgsdf</td>
-                        <td>sdfgsdg</td>
-                    </tr>
-                    <tr>
-                        <td>ggdfsgs</td>
-                        <td><label><input type="checkbox" value=""></label></td>
-                        <td>sdfgsdfgsdfgsdf</td>
-                        <td>sdfgsdg</td>
-                    </tr>
-                    <tr>
-                        <td>ggdfsgs</td>
-                        <td><label><input type="checkbox" value=""></label></td>
-                        <td>sdfgsdfgsdfgsdf</td>
-                        <td>sdfgsdg</td>
+                    <tr class="todo-item">
+                        <td>1</td>
+                        <td><label><input class="checkbox" type="checkbox" value=""></label></td>
+                        <td class="todo-name-col">
+                            <span class="todo-name">sdfgsdfgsdfgsdf</span>
+                            <input type="text" class="textfield">
+                        </td>
+                        <td>
+                            <button class="btn edit" type="button">Edit</button>
+                            <button class="btn warning delete" type="button">Delete</button>
+                        </td>
                     </tr>
                 </tbody>
                 <tfoot>
