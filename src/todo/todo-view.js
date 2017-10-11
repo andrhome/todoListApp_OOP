@@ -1,5 +1,9 @@
-class View{
+import { EventEmiter } from './todo-helper';
+
+class View extends EventEmiter {
     constructor() {
+        super();
+
         this.todoForm = document.getElementById('todoForm');
         this.textField = document.getElementById('textField');
         this.addTodoBtn = document.getElementById('addTodoBtn');
@@ -7,9 +11,9 @@ class View{
         this.todoForm.addEventListener('submit', this.hadleAdd.bind(this));
     }
 
-    hadleAdd(ev) {
-        ev.preventDefault();
-        console.log(100);
+    hadleAdd(e) {
+        e.preventDefault();
+        this.emit('add', 'view emiter');
     }
 }
 
