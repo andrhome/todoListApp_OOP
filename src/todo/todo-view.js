@@ -13,7 +13,9 @@ class View extends EventEmiter {
 
     hadleAdd(e) {
         e.preventDefault();
-        this.emit('add', 'view emiter');
+
+        let value = this.textField.value;
+        this.emit('add', value);
     }
 }
 
