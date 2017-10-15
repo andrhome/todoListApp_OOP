@@ -283,3 +283,8 @@ table label{
 .server-error{
     font-size: 48px;
 }
+.total-holder{
+    font-size: 20px;
+    font-weight: 700;
+    margin: 15px 0 30px;
+}

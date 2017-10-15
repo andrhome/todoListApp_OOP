@@ -1,62 +1,22 @@
 import { EventEmiter } from './todo-helper';
+import { renderTodoList } from './render-todolist';
 
 class View extends EventEmiter {
     constructor() {
         super();
 
-        this.tableListTbody = document.querySelector('#tableList tbody');
         this.todoForm = document.getElementById('todoForm');
+        this.tableList = document.getElementById('tableList');
         this.textField = document.getElementById('textField');
-        this.addTodoBtn = document.getElementById('addTodoBtn');
+
+        this.renderTodoList = renderTodoList;
 
         this.todoForm.addEventListener('submit', this.hadleAdd.bind(this));
+        this.tableList.addEventListener('click', this.eventsListeners.bind(this))
     }
 
-    renderTodoList(todoItemsData) {
-
-        if(todoItemsData !== null && typeof todoItemsData !== 'number') {
-
-            let todoItems = JSON.parse(todoItemsData),
-                todoItemsHtml = '';
-
-            let addClassCompleted = function(todo) {
-                if (todo.completed) return 'completed';
-            };
-
-            let checkOnChecked = function(todo) {
-                if (todo.completed) return 'checked';
-            };
-
-            todoItems.forEach(function(todo, i) {
-                todoItemsHtml += '<tr data-id="' + todo.id + '" class="todo-item ' + addClassCompleted(todo) + '">' +
-                                    '<td>' + (i+1) + '</td>' +
-                                    '<td>' +
-                                        '<input id="checkbox-' + (i+1) + '" class="checkbox" type="checkbox" ' + checkOnChecked(todo) + '>' +
-                                        '<label for="checkbox-' + (i+1) + '" class="label-checkbox"></label>' +
-                                    '</td>' +
-                                    '<td class="todo-name-col">' +
-                                        '<span class="todo-name">' + todo.title + '</span>' +
-                                        '<input type="text" class="textfield">' +
-                                    '</td>' +
-                                    '<td>' +
-                                        '<button class="btn edit" type="button">Edit</button>' +
-                                        '<button class="btn warning delete" type="button">Delete</button>' +
-                                    '</td>' +
-                                '</tr>';
-            });
-
-            this.tableListTbody.insertAdjacentHTML('beforeEnd', todoItemsHtml);
-        } else{
-            let errorMessage = '<tr>' +
-                            '<td colspan="4">' +
-                                '<h2 class="todo-list-error">' +
-                                '<div>No todo items!</div>' +
-                                '<div class="server-error">Server error ' + todoItemsData + '</div>' +
-                                '</h2>' +
-                            '</td>' +
-                        '</tr>';
-            this.tableListTbody.insertAdjacentHTML('beforeEnd', errorMessage);
-        }
+    eventsListeners({target}) {
+        if (target.tagName === 'BUTTON' && target.classList.contains('delete')) this.handleRemove({target});
     }
 
     hadleAdd(e) {
@@ -64,6 +24,14 @@ class View extends EventEmiter {
 
         let value = this.textField.value;
         this.emit('add', value);
+        this.textField.value = '';
+    }
+
+    handleRemove( {target} ) {
+        let listItem = target.parentNode.parentNode,
+            id = listItem.getAttribute('data-id');
+
+        this.emit('remove', id);
     }
 }
 

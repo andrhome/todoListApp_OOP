@@ -28,7 +28,9 @@
                     <button id="addTodoBtn" class="btn col-md-1" type="submit">Add</button>
                 </div>
             </form>
-            <br>
+            <div class="total-holder">
+                <strong>Total todo: <span id="totalTodo" class="total-todo"></span></strong>
+            </div>
             <div class="table-list-holder">
                 <table id="tableList" class="table table-list">
                     <thead>
@@ -42,11 +44,6 @@
                     <tbody>
                         <!-- Todo list will render here -->
                     </tbody>
-                    <tfoot>
-                    <tr>
-                        <td colspan="4"><strong>Total: <span class="total-tasks">0</span></strong></td>
-                    </tr>
-                    </tfoot>
                 </table>
             </div>
         </main>
