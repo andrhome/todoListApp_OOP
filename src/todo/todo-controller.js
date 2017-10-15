@@ -9,8 +9,8 @@ class Controller {
         view.on('add', this.addTodo.bind(this));
     }
 
-    createTodoList(todoItems) {
-        console.log(todoItems);
+    createTodoList(todoItemsData) {
+        this.view.renderTodoList(todoItemsData);
     }
 
     addTodo(title) {

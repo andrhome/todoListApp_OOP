@@ -1,9 +1,48 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+ol, ul {list-style: none;}
+blockquote, q{quotes: none;}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
 body {
     background-color: #fff;
     color: #333;
     font-family: 'Consolas', Arial, Helvetica, sans-serif;
-    margin: 0;
-    padding: 1em;
+}
+
+*{
+    box-sizing: border-box;
 }
 
 ul {
@@ -13,21 +52,20 @@ ul {
 }
 
 button.btn {
-    background: #fff;
-    border: 1px solid #545454;
-    border-radius: 4px;
-    color: #545454;
-    position: relative;
-    height: 36px;
-    margin: 0;
     min-width: 64px;
-    padding: 0 16px;
+    height: 36px;
     display: inline-block;
     font-family: "Consolas","Helvetica","Arial",sans-serif;
     font-size: 14px;
     font-weight: 500;
+    line-height: 36px;
     text-transform: uppercase;
     letter-spacing: 0;
+    vertical-align: middle;
+    background: #fff;
+    border: 1px solid #545454;
+    border-radius: 4px;
+    color: #545454;
     overflow: hidden;
     will-change: box-shadow;
     transition: box-shadow .2s cubic-bezier(.4,0,1,1),background-color .2s cubic-bezier(.4,0,.2,1),color .2s cubic-bezier(.4,0,.2,1);
@@ -35,8 +73,9 @@ button.btn {
     cursor: pointer;
     text-decoration: none;
     text-align: center;
-    line-height: 36px;
-    vertical-align: middle;
+    position: relative;
+    padding: 0 16px;
+    margin: 0 5px;
 }
 
 button:hover {
@@ -94,9 +133,10 @@ input {
     outline: none;
 }
 
-main {
+.main {
     background: #fff;
-    max-width: 1000px;
+    max-width: 900px;
+    padding:  0 20px;
     margin: 30px auto;
 }
 
@@ -115,8 +155,96 @@ header h1 {
     color: #323330;
     margin: 1rem auto;
 }
+.form-control{
+    height: 36px;
+}
 
+#addTodoBtn{
+    background: #656565;
+    color: #fff;
+    border-color: #d5d5d5;
+}
+#addTodoBtn:hover{
+    background: #f1f1f1;
+    color: #989898;
+    border-color: #989898;
+}
+.table-list-holder{
+    max-height: 460px;
+    overflow-y: auto;
+}
+.table-list{
+    width: 100%;
+}
+.table td,
+.table th{
+    vertical-align: middle !important;
+}
+.table td:first-child,
+.table th:first-child{
+    width: 70px;
+    padding-left: 20px;
+}
+table th{
+    font-size: 18px;
+    background: #001A26;
+    color: #fff;
+    text-transform: uppercase;
+}
+table .completed-head{
+    width: 130px;
+}
+table .btn-head{
+    width: 195px;
+}
+.table tr.completed td{
+    background-color: #dff0d8;
+    color: #ccc;
+    text-decoration: line-through;
+}
+.table tr.completed .label-checkbox::after{
+    background-color: #ccc;
+}
+table tfoot td{
+    font-size: 18px;
+    color: #000;
+}
+table input,
+table label{
+    margin: 0;
+}
 
+.checkbox{
+    display: none;
+}
+.label-checkbox{
+    height: 20px;
+    display: inline-block;
+    vertical-align: middle;
+    cursor: pointer;
+    position: relative;
+}
+.label-checkbox::before{
+    content: '';
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+}
+.label-checkbox::after{
+    display: none;
+    content: '';
+    width: 12px;
+    height: 12px;
+    background: #bf0000;
+    position: absolute;
+    top: 4px;
+    left: 4px;
+}
+.checkbox:checked + label::after{
+    display: block;
+}
 
 /* Todo Item */
 .todo-item .textfield {
@@ -145,50 +273,13 @@ header h1 {
 .todo-item:hover button:not(.checkbox) {
     opacity: 1;
 }
-
-.form-control{
-    height: 36px;
+.todo-list-error{
+    font-size: 28px;
+    font-weight: 700;
+    color: #bf0000;
+    text-align: center;
+    padding: 10px;
 }
-
-#addTodoBtn{
-    background: #656565;
-    color: #fff;
-    border-color: #d5d5d5;
-}
-#addTodoBtn:hover{
-    background: #f1f1f1;
-    color: #989898;
-    border-color: #989898;
-}
-
-.table-list{
-    width: 100%;
-    border-collapse: collapse;
-}
-.table td,
-.table th{
-    vertical-align: middle !important;
-}
-.table td:first-child,
-.table th:first-child{
-    width: 70px;
-    padding-left: 20px;
-}
-table th{
-    background: #001A26;
-    color: #fff;
-    text-transform: uppercase;
-}
-.table tr.completed td{
-    background-color: #dff0d8;
-    color: #ccc;
-    text-decoration: line-through;
-}
-table tfoot td{
-    font-size: 18px;
-    color: #000;
-}
-table input,
-table label{
-    margin: 0;
+.server-error{
+    font-size: 48px;
 }

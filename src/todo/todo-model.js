@@ -36,7 +36,12 @@ class Model extends EventEmiter{
                 this.todoItems = response;
                 this.emit('createTodoList', this.todoItems);
             })
-            .catch(error => console.log(error));
+            .catch(
+                error => {
+                    console.log(error);
+                    this.emit('createTodoList', error.code);
+                }
+            );
     }
 }
 
