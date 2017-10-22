@@ -1,5 +1,7 @@
 import { EventEmiter, httpService } from './todo-helper';
 
+const BASE_URL = 'https://jsonplaceholder.typicode.com/todos/';
+
 class Model extends EventEmiter{
     constructor() {
         super();
@@ -14,7 +16,7 @@ class Model extends EventEmiter{
     }
 
     getTodoItems() {
-        httpService('GET', 'https://jsonplaceholder.typicode.com/todos')
+        httpService('GET', BASE_URL)
             .then(response => {
                 this.todoItems = JSON.parse(response);
                 this.emit('createTodoList', this.todoItems);
@@ -28,17 +30,17 @@ class Model extends EventEmiter{
     }
 
     addTodo(todoItem) {
-        httpService('POST', 'https://jsonplaceholder.typicode.com/todos', todoItem)
+        httpService('POST', BASE_URL, todoItem)
             .then( response => {
                 let newTodo = JSON.parse(response);
-                this.todoItems.push(newTodo);
+                this.todoItems.splice(0, 0, newTodo);
                 this.emit('createTodoList', this.todoItems);
             })
             .catch( error => console.log(error) );
     }
 
     removeTodo(id) {
-        httpService('DELETE', `https://jsonplaceholder.typicode.com/todos/${id}`)
+        httpService('DELETE', BASE_URL + id)
             .then( () => {
                 let index = this.getIndexItem(id);
 
@@ -51,7 +53,7 @@ class Model extends EventEmiter{
     }
 
     toggleTodoItem(id) {
-        httpService('PUT', `https://jsonplaceholder.typicode.com/todos/${id}`)
+        httpService('PUT', BASE_URL + id)
             .then( () => {
                 let index = this.getIndexItem(id);
 

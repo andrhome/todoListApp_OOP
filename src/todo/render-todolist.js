@@ -1,4 +1,4 @@
-export function renderTodoList(todoItems, callback) {
+export function renderTodoList(todoItems) {
 
     let tableListTbody = document.querySelector('#tableList tbody'),
         totalTodo = document.getElementById('totalTodo');

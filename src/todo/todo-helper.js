@@ -31,8 +31,8 @@ function httpService(type, url, body) {
             } else {
                 let error = new Error(this.statusText);
                 error.code = this.status;
-                reject(error);
                 document.body.classList.remove('load');
+                reject(error);
             }
         };
 
