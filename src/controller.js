@@ -37,11 +37,6 @@ class Controller {
         this.model.removeItem(id);
         this.view.removeItem(id);
     }
-
-    // Get data from JSONPlaceholder (https://jsonplaceholder.typicode.com)
-    getDataJson(data) {
-        this.model.getData(data);
-    }
 }
 
 export default Controller;

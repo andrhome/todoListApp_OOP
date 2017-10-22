@@ -15,84 +15,33 @@ class EventEmiter {
     }
 }
 
-class HttpService {
-    constructor() {}
+function httpService(type, url, body) {
+    return new Promise(function (resolve, reject) {
+        let xhr = new XMLHttpRequest();
 
-    getData(url) {
-        return new Promise(function (resolve, reject) {
-            let xhr = new XMLHttpRequest();
+        xhr.open(type, url, true);
+        xhr.setRequestHeader('Content-Type', 'application/json');
 
-            xhr.open('GET', url, true);
+        document.body.classList.add('load');
 
-            xhr.onload = function () {
-                if (this.status === 200) {
-                    resolve(this.response);
-                } else {
-                    let error = new Error(this.statusText);
-                    error.code = this.status;
-                    reject(error);
-                }
-            };
+        xhr.onload = function () {
+            if (this.status === 200 || this.status === 201) {
+                resolve(this.response);
+                document.body.classList.remove('load');
+            } else {
+                let error = new Error(this.statusText);
+                error.code = this.status;
+                reject(error);
+                document.body.classList.remove('load');
+            }
+        };
 
-            xhr.onerror = function () {
-                reject(new Error('Network error'));
-            };
+        xhr.onerror = function () {
+            reject(new Error('Network error'));
+        };
 
-            xhr.send();
-        });
-    }
-
-    addData(url, body) {
-        return new Promise(function (resolve, reject) {
-            let xhr = new XMLHttpRequest();
-
-            console.log('Body ', body);
-
-            xhr.open('POST', url, true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-
-            xhr.onload = function () {
-                if (this.status === 201) {
-                    resolve(this.response);
-                } else {
-                    let error = new Error(this.statusText);
-                    error.code = this.status;
-                    reject(error);
-                }
-            };
-
-            xhr.onerror = function () {
-                reject(new Error('Network error'));
-            };
-
-            xhr.send(JSON.stringify(body));
-        });
-    }
-
-    removeData(url) {
-        return new Promise(function (resolve, reject) {
-            let xhr = new XMLHttpRequest();
-
-            xhr.open('DELETE', url, true);
-            xhr.setRequestHeader('Content-Type', 'application/json');
-
-            xhr.onload = function () {
-                if (this.status === 201) {
-                    resolve(this.response);
-                } else {
-                    let error = new Error(this.statusText);
-                    error.code = this.status;
-                    reject(error);
-                }
-            };
-
-            xhr.onerror = function () {
-                reject(new Error('Network error'));
-            };
-
-            xhr.send();
-        });
-    }
+        xhr.send(JSON.stringify(body));
+    });
 }
 
-export { EventEmiter, HttpService }
+export { EventEmiter, httpService }

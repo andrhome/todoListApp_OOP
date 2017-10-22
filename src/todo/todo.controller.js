@@ -1,4 +1,3 @@
-
 class Controller {
     constructor(model, view) {
         this.model = model;
@@ -9,6 +8,7 @@ class Controller {
         model.on('createTodoList', this.createTodoList.bind(this));
         view.on('add', this.addTodo.bind(this));
         view.on('remove', this.removeTodo.bind(this));
+        view.on('toggle', this.toggleTodo.bind(this));
     }
 
     createTodoList(todoItemsData) {
@@ -26,7 +26,11 @@ class Controller {
     }
 
     removeTodo(id) {
-        console.log('id ', id);
+        this.model.removeTodo(id);
+    }
+
+    toggleTodo(id) {
+        this.model.toggleTodoItem(id);
     }
 }
 

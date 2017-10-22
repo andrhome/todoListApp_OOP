@@ -1,9 +1,9 @@
-export function renderTodoList(todoItems) {
+export function renderTodoList(todoItems, callback) {
 
     let tableListTbody = document.querySelector('#tableList tbody'),
         totalTodo = document.getElementById('totalTodo');
 
-    if(todoItems !== null && typeof todoItems !== 'number') {
+    if(todoItems && typeof todoItems !== 'number') {
 
         let todoItemsHtml = '';
 
@@ -16,6 +16,8 @@ export function renderTodoList(todoItems) {
         let checkOnChecked = function(todo) {
             if (todo.completed) return 'checked';
         };
+
+        tableListTbody.innerHTML = '';
 
         todoItems.forEach(function(todo, i) {
             todoItemsHtml += '<tr data-id="' + todo.id + '" class="todo-item ' + addClassCompleted(todo) + '">' +
@@ -43,7 +45,7 @@ export function renderTodoList(todoItems) {
                                 '<td colspan="4">' +
                                     '<h2 class="todo-list-error">' +
                                         '<div>No todo items!</div>' +
-                                        '<div class="server-error">Server error ' + todoItemsData + '</div>' +
+                                        '<div class="server-error">Server error ' + todoItems + '</div>' +
                                     '</h2>' +
                                 '</td>' +
                             '</tr>';

@@ -29,11 +29,6 @@ class Model{
             this.state.splice(index, 1);
         }
     }
-
-    // Get data from JSONPlaceholder (https://jsonplaceholder.typicode.com)
-    getData(data) {
-        console.log('Model data ', data);
-    }
 }
 
 export default Model;
