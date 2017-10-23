@@ -52,18 +52,35 @@ class Model extends EventEmiter{
             .catch( error => console.log(error) );
     }
 
-    toggleTodoItem(id) {
-        httpService('PUT', BASE_URL + id)
-            .then( () => {
-                let index = this.getIndexItem(id);
+    editTodo( {id, title} ) {
+        httpService('PUT', BASE_URL + id, {title: title})
+            .then( response => {
+                let data = JSON.parse(response),
+                    index = this.getIndexItem(data.id);
 
                 if (index > -1) {
-                    if ( this.todoItems[index].completed ) {
-                        this.todoItems[index].completed = false;
-                    } else{
-                        this.todoItems[index].completed = true;
-                    }
+                    this.todoItems[index].title = data.title;
+                    this.emit('createTodoList', this.todoItems);
+                }
+            })
+            .catch( error => console.log(error) );
+    }
 
+    toggleTodo(id) {
+        let index = this.getIndexItem(id),
+            completed;
+
+        if (index > -1) {
+            this.todoItems[index].completed ? completed = false : completed = true;
+        }
+
+        httpService('PUT', BASE_URL + id, {completed: completed})
+            .then( (response) => {
+                let data = JSON.parse(response),
+                    index = this.getIndexItem(data.id);
+
+                if (index > -1) {
+                    this.todoItems[index].completed = data.completed;
                     this.emit('createTodoList', this.todoItems);
                 }
             })

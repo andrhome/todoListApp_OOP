@@ -21,6 +21,11 @@ class View extends EventEmiter {
         if (target.tagName === 'LABEL' && target.classList.contains('label-checkbox')) this.handleToggle( {target} );
     }
 
+    getItemId(target) {
+        let listItem = target.parentNode.parentNode;
+        return listItem.getAttribute('data-id');
+    }
+
     hadleAdd(e) {
         e.preventDefault();
 
@@ -30,20 +35,32 @@ class View extends EventEmiter {
     }
 
     handleRemove( {target} ) {
-        let listItem = target.parentNode.parentNode,
-            id = listItem.getAttribute('data-id');
+        this.emit('remove', this.getItemId(target));
+    }
 
-        this.emit('remove', id);
+    handleEdit( {target} ) {
+        let id = this.getItemId(target),
+            parent = target.parentNode.parentNode,
+            value = parent.querySelector('.todo-name').innerText,
+            textfield = parent.querySelector('.textfield'),
+            title = '';
+
+        if ( parent.classList.contains('editing') ) {
+            parent.classList.remove('editing');
+            target.innerText = 'Edit';
+
+            title = textfield.value;
+            this.emit('edit', {id, title});
+        } else{
+            parent.classList.add('editing');
+            textfield.value = value;
+            target.innerText = 'Save';
+        }
     }
 
     handleToggle( {target} ) {
-        let listItem = target.parentNode.parentNode,
-            id = listItem.getAttribute('data-id');
-
-        this.emit('toggle', id);
+        this.emit('toggle',this.getItemId(target));
     }
-
-    handleEdit( {target} ) {}
 }
 
 export default View;

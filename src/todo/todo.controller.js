@@ -8,6 +8,7 @@ class Controller {
         model.on('createTodoList', this.createTodoList.bind(this));
         view.on('add', this.addTodo.bind(this));
         view.on('remove', this.removeTodo.bind(this));
+        view.on('edit', this.editTodo.bind(this));
         view.on('toggle', this.toggleTodo.bind(this));
     }
 
@@ -29,8 +30,12 @@ class Controller {
         this.model.removeTodo(id);
     }
 
+    editTodo( {id, title} ) {
+        this.model.editTodo( {id, title} );
+    }
+
     toggleTodo(id) {
-        this.model.toggleTodoItem(id);
+        this.model.toggleTodo(id);
     }
 }
 

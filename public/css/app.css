@@ -140,7 +140,7 @@ input {
     background: #fff;
     max-width: 900px;
     padding:  0 20px;
-    margin: 30px auto;
+    margin: 10px auto 0;
 }
 
 header {
@@ -256,19 +256,21 @@ table label{
 /* Todo Item */
 .todo-item .textfield {
     display: none;
+    width: 90%;
+    height: 36px;
+    line-height: 36px;
+    color: #000;
+    border-radius: 4px;
+    padding: 0 10px;
 }
 .todo-name-col{
     width: 47%;
 }
-.todo-item.editing .checkbox,
 .todo-item.editing .todo-name {
     display: none;
 }
 
 .todo-item.editing .textfield {
-    width: 80%;
-    height: 32px;
-    border-radius: 4px;
     display: block;
 }
 
@@ -285,7 +287,8 @@ table label{
 .total-holder{
     font-size: 20px;
     font-weight: 700;
-    margin: 15px 0 30px;
+    text-align: right;
+    margin: 15px 15px 30px;
 }
 .overlay{
     display: none;
